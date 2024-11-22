@@ -39,3 +39,29 @@
 ### 10. Do We Need Transformations?
 - **Condition:** If the p-value of the ADF test is greater than 0.05.
 - **Result:** The data is not stationary, consider differencing or other transformations.
+
+
+
+```mermaid
+flowchart TD
+    A[Is the Data Stationary?]
+    B[Is the Data Uncorrelated?]
+    C[Is the Data Normally Distributed?]
+    D[Is the Data White Noise?]
+    E[Do We Need a Linear Model?]
+    F[Is the Data Gaussian White Noise?]
+    G[Is the Data Strict White Noise?]
+    H[Is the Data Independent?]
+    I[Do We Need a Non-Linear Model?]
+    J[Do We Need Transformations?]
+
+    A -->|p-value of ADF test <= 0.05| B
+    B -->|lb_pvalue of Box test > 0.05| C
+    C -->|p-value of Shapiro-Wilk test > 0.05| D
+    D -->|mean ≈ 0, variance > 0, lb_pvalue of Box test > 0.05| E
+    E -->|p-value of ADF test <= 0.05, lb_pvalue of Box test <= 0.05| F
+    F -->|p-value of Shapiro-Wilk test > 0.05, mean ≈ 0, variance > 0, lb_pvalue of Box test > 0.05| G
+    G -->|mean ≈ 0, variance > 0, lb_pvalue of Box test > 0.05| H
+    H -->|p-value of Shapiro-Wilk test > 0.05, lb_pvalue of Box test > 0.05| I
+    I -->|lb_pvalue of Ljung-Box test on squared residuals <= 0.05| J
+    J -->|p-value of ADF test > 0.05| A
